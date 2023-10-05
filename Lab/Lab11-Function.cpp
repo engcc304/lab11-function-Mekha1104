@@ -28,39 +28,40 @@
 #include <stdio.h>
 #include <math.h>
 
-int isArmstrong(int num) {
-    int originalNum, remainder, n, result = 0;
-    originalNum = num;
+int countDigits(int number) {
+    int count = 0;
+    while (number != 0) {
+        number /= 10;
+        count++;
+    }
+    return count;
+}
 
-    // คำนวณจำนวนหลัก
-    n = (int)log10(num) + 1;
+int isArmstrongNumber(int number) {
+    int originalNumber = number;
+    int numDigits = countDigits(number);
+    int armstrongSum = 0;
 
-    // คำนวณอาร์มสตรอง
-    while (originalNum != 0) {
-        remainder = originalNum % 10;
-        result += pow(remainder, n);
-        originalNum /= 10;
+    while (number != 0) {
+        int digit = number % 10;
+        armstrongSum += pow(digit, numDigits);
+        number /= 10;
     }
 
-    // ตรวจสอบว่า num เป็นอาร์มสตรองหรือไม่
-    if (result == num) {
-        return 1; // เป็นอาร์มสตรอง
-    } else {
-        return 0; // ไม่เป็นอาร์มสตรอง
-    }
+    return armstrongSum == originalNumber;
 }
 
 int main() {
-    int num;
+    int userNumber;
+    printf("Enter Number: ");
+    scanf("%d", &userNumber);
 
-    printf("Enter number: ");
-    scanf("%d", &num);
-
-    if (isArmstrong(num)) {
-        printf("Pass\n");
+    if (isArmstrongNumber(userNumber)) {
+        printf("Pass.\n");
     } else {
-        printf("Not Pass\n");
+        printf("Not Pass.\n");
     }
 
     return 0;
 }
+//end main function
